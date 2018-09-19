@@ -1,0 +1,74 @@
+<scroll-view scroll-y style="height: {{scrollHeight}}px;" scroll-top="{{scrollTop}}" bindscrolltoupper="scrollToupper" bindscrolltolower="scrollTolower">
+  <block wx:for="{{articleList}}" wx:for-item="item" wx:for-index="idx" wx:key="ik">
+  <view class="info_main_box">
+      <view class="author_box">
+          <view class="author_info_view">
+              <navigator url="/pages/author/author" open-type ="navigate" hover-class="none">
+                  <image src="{{item.user.headImgUrl}}"></image>
+              </navigator>
+              <text>{{item.user.nickName}}</text>
+              <text class="author_date_txt">{{item.createTimeStr}}</text>
+          </view>
+      </view>
+      <!-- <image mode='aspectFill' src="{{item.pictures[0].path}}" data-uri="{{item.pictures[0].path}}" bindtap='prevImg'></image> -->
+      <view class="info_txt_box">
+        <text class="info_txt">{{item.content}}</text>
+      </view>
+      <view class="image_list_box">
+        <view class='{{item.pictures.length==1?"single_image_box":"image_box"}}' wx:for="{{item.pictures}}" wx:for-item="pic" wx:key="ik">
+          <image mode='{{item.pictures.length==1?"aspectFill":""}}' class='{{item.pictures.length==1?"single_moment_img":"moment_img"}}' src="{{pic.path}}" data-uri="{{pic.path}}" data-idx='{{idx}}' bindtap='prevImg'></image>
+        </view>
+      </view>
+      <view class="info_desc_box">
+          <view class="info_footer_box">
+              <view class="count_box">
+                  <navigator url="/pages/gift-list/gift-list?articleId={{item.id}}&receiveUserId={{item.user.id}}" open-type ="navigate" hover-class="none">
+                    <view class="count_info_content" bindtap="setNoRefresh">
+                        <image src="/images/icon_coffee0.png" data-idx='{{idx}}' data-article-id='{{item.id}}'></image>
+                        <text>{{item.giftCount}}</text>
+                    </view>
+                  </navigator>
+                  <view class="count_info_content">
+                      <image src="/images/icon_comment0.png" data-idx='{{idx}}' data-article-id='{{item.id}}' bindtap="openComment"></image>
+                      <text>{{item.commentCount}}</text>
+                  </view>
+                  <view class="count_info_content">
+                      <image src="{{item.userIsAgree == 1 ? '/images/icon_like1.png' : '/images/icon_like0.png'}}" data-idx='{{idx}}' data-article-id='{{item.id}}' bindtap="{{item.userIsAgree == 1?'':'agree'}}"></image>
+                      <text>{{item.agreeCount}}</text>
+                  </view>
+              </view>
+          </view>
+          
+          <view class="photo_comment_box">
+              <block wx:for="{{item.comments}}" wx:for-item="subItem" wx:for-index="cidx" wx:key="ik">
+              <block wx:if="{{subItem.user.id != -1}}">
+              <view catchtap="openTargetComment" class="comment_content" style="{{clickedIdx ==idx && clickedCidx==cidx?'background-color: #ccc':''}}" data-comment-id="{{subItem.id}}" data-user-id='{{subItem.user.id}}' data-nick-name='{{subItem.user.nickName}}' data-idx='{{idx}}' data-cidx='{{cidx}}' data-article-id='{{item.id}}'>
+                <text class='comment_user'>{{subItem.user.nickName}}</text><text wx:if="{{subItem.targetComment != null}}">回复<text class='comment_user'>{{subItem.targetComment.user.nickName}}</text></text>：{{subItem.content}}
+              </view>
+              </block>
+              <block wx:else>
+              <view class="comment_content">
+                <text class='gift_comment_content'>{{subItem.content}}</text>
+              </view>
+              </block>
+              </block>
+          </view>
+      </view>
+  </view>
+  </block>
+</scroll-view>
+
+<!-- 弹出层 -->
+    <view class="cover_box" wx:if="{{showDialog}}" bindtap="toggleDialogHandle"></view>
+    <view class="overlay_box" wx:if="{{showDialog}}">
+        <view class="overlay_title">
+            <text>评论</text>
+            <image class="close_btn" src="/images/icon_cancel.png" mode="aspectFill" bindtap="toggleDialogHandle"></image>
+        </view>
+        
+        <view class="textarea_box">
+            <textarea placeholder="{{defaultCommentContent}}" name="textarea" bindblur='setCommentContent' />
+        </view>
+
+        <button class="send_btn" bindtap='saveComment'>发送</button>
+    </view>

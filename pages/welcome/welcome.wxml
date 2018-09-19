@@ -1,0 +1,9 @@
+<!--pages/welcome/welcome.wxml-->
+<view class='loading-container'>
+  <image class="loading-image" style="" mode="scaleToFill" src="{{coverImg}}"></image>
+</view>
+
+<view class="enter-container">
+  <button class="enter-button" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo"> 你回家了，我在等你呢 
+  </button>
+</view>

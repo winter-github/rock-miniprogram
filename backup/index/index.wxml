@@ -1,0 +1,19 @@
+<!--index.wxml-->
+<view class="container">
+  <swiper indicator-dots="{{indicatorDots}}"
+    autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+    <block wx:for="{{imgUrls}}" wx:key="iu">
+      <swiper-item>
+        <image src="{{item}}"  width="100%" height="150"/> 
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class="userInfo">
+    <button wx:if="{{!hasUserInfo && canIUse}}"  open-type="getUserInfo" bindgetuserinfo="getUserInfo">立即体验</button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <text class="user-motto">hello, {{userInfo.nickName}}. </text>
+      <text class="user-motto">{{motto}}</text>
+    </block>
+  </view>
+</view>

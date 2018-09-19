@@ -1,0 +1,75 @@
+/* pages/circle-add/circle-add.wxss */
+.page{
+ padding: 20px
+}
+
+.flex_center{
+	display: flex;
+	flex-direction:column;
+	align-items: center;
+}
+
+.flex_center{
+	display: flex;
+	flex-direction:column;
+	align-items: center;
+}
+
+.start_txt{
+	margin: 160rpx auto 120rpx;
+	font-size: 40rpx;
+	display: block;
+}
+
+.add_img_btn{
+	width: 200rpx;
+	height: 200rpx;
+}
+
+.add_txt{
+	display: block;
+	margin-top: 20rpx;
+	font-size: 40rpx;
+}
+
+.preview_img{
+    margin-top: 0rpx;
+    width: 255rpx;
+}
+
+.textarea_box{
+	height: 213rpx;
+	border-radius: 10rpx;
+	border:1rpx solid rgb(206,206,206);
+	margin-top: 30rpx;
+	overflow: inherit;
+}
+
+.textarea_box1{
+ width: 100%;
+ margin-bottom: 40px;
+ font-size: 20px;
+ padding: 5px
+}
+
+.publish_btn{
+  margin-top:50rpx;
+  width:300rpx;
+}
+
+
+.image{
+ width:31%;
+ height: 200rpx;
+ padding: 4rpx
+}
+.moment_img{
+ width: 196rpx;
+ height: 196rpx;
+}
+.image_content{
+ width: 100%;
+ display: flex;
+ flex-wrap: wrap;
+ margin: 30rpx
+}

@@ -1,0 +1,103 @@
+view, text{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+image{
+  background: #ECECEC;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.clearBoth:after{
+	content: " ";
+	display: block;
+	clear: both;
+}
+.clearBoth:before{
+	content: " ";
+	display: block;
+	clear: both;
+}
+.float_left{
+  float: left;
+}
+.float_right{
+  float: right;
+}
+
+.my_gift{
+  padding: 0 30rpx 100rpx;
+}
+.iphoneX_my_gift{
+  padding: 0 30rpx 168rpx;
+}
+.my_gift .title{
+  font-size: 32rpx;
+  font-weight: 700;
+  padding: 30rpx 0;
+  line-height: 32rpx;
+}
+
+.my_gift .good_item{
+  padding-bottom: 40rpx;
+  width: 690rpx;
+}
+.my_gift .good_item .cover{
+  width: 180rpx;
+  height: 172rpx;
+  border-radius: 12rpx;
+  margin-right: 30rpx;
+}
+.my_gift .good_item .article_title{
+  width: 450rpx;
+  overflow: hidden;
+  height: 72rpx;
+  line-height: 36rpx;
+  font-size: 26rpx;
+}
+
+.my_gift .good_item .article_title .goods_name{
+  font-weight: 700;
+}
+.my_gift .good_item .article_title .status{
+  color: #d4237a;
+}
+.my_gift .good_item .article_title .remark{
+  font-size: 24rpx;
+}
+
+.my_gift .good_item .user_avatar{
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  margin: 18rpx 12rpx 16rpx 0;
+}
+.my_gift .good_item .user_name{
+  font-size: 24rpx;
+  line-height: 32rpx;
+  color: #8E8E8E;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 400rpx;
+  margin: 18rpx 0 16rpx 0;
+}
+.my_gift .good_item .price{
+  font-size: 24rpx;
+  line-height: 1em;
+}
+
+.font_din{
+  font-family: "din";
+  font-weight: 700;
+}
+
+.foot_view{
+  text-align: center;
+  
+}
+
+.foot_describe{
+  font-size: 24rpx;
+  line-height: 1em;
+  color: #8E8E8E;
+}

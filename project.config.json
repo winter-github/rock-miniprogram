@@ -1,0 +1,73 @@
+{
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "1.9.91",
+	"appid": "wxb4b057ebd11f8e61",
+	"projectname": "hello-miniprogram",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": -1,
+					"name": "日志",
+					"pathName": "pages/logs/logs",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "circle",
+					"pathName": "pages/circle/circle",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "welcome",
+					"pathName": "pages/welcome/welcome",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "circle-add",
+					"pathName": "pages/circle-add/circle-add",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "gift-list",
+					"pathName": "pages/gift-list/gift-list",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "my-gift",
+					"pathName": "pages/my-gift/my-gift",
+					"query": ""
+				}
+			]
+		}
+	}
+}

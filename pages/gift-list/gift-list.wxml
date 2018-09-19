@@ -1,0 +1,21 @@
+<view class="main">
+    <scroll-view class="categroy-right" scroll-y="{{isScroll}}"  scroll-with-animation="true">
+      <view class="cate-box">
+          <view class="cate-banner">
+              <image src="{{banner}}"></image>
+          </view>
+          <view class="cate-title">
+              <text>请TA喝一杯</text>
+          </view>
+          <view class="product">
+              <view class="product-list" wx:for="{{goodsList}}" wx:key="index" wx:for-item="item">
+                  <view bindtap='buyGift' data-goods-id="{{item.id}}" data-price="{{item.price}}">
+                      <image src="{{item.imageUrl}}"></image>
+                      <view class="goods-info"><text>{{item.name}}</text></view>
+                      <view class="goods-info"><text>￥{{item.price}}</text></view>
+                  </view>
+              </view>
+          </view>
+      </view>
+    </scroll-view>
+</view>

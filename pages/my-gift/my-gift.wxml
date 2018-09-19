@@ -1,0 +1,28 @@
+  <view class="my_gift">
+    <view class='title'>收到的礼物</view>
+    <view class="good_item clearBoth" wx:key="key" wx:for="{{giftList}}">
+      <image class="cover float_left" lazy-load mode="aspectFill" src="{{item.goods.imageUrl}}" />
+      <view class="article_title float_left">
+        <text class='goods_name'>{{item.goods.name}} x1 礼品卡</text> 
+        | <text class='status'>{{item.status == 'WAIT_USE'?'未使用':'已使用'}}</text>
+      </view>
+      <image class="user_avatar float_left" lazy-load src="{{item.sendUser.headImgUrl}}" />
+      <text class="user_name float_left">{{util.sub(item.sendUser.nickName)}} 赠送于{{item.createTimeStr}}</text>
+      <text bindtap='viewCode' class="price font_din float_left" data-code="{{item.code}}">查看密码</text>
+    </view>
+  </view>
+  <view class='foot_view'>
+    <text class="foot_describe">凭礼品卡可到实体店换取对应的饮品，赶快行动吧</text>
+  </view>
+
+  <wxs module="util">
+    var sub = function(val) {
+        if(val.length>9){
+          return val.substring(0, 9)
+        }
+        return val;
+    }
+    module.exports.sub = sub;
+  </wxs>
+
+  

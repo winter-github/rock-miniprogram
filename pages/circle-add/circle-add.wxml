@@ -1,0 +1,33 @@
+<!--pages/circle-add/circle-add.wxml-->
+<view class="page">
+    <view class="fixed-cont-body">     
+    	<view class="{{!hasImg?'flex_center':''}}">
+        <block wx:if="{{hasImg}}">
+            <!-- <block wx:for="{{imgUrls}}" wx:for-item="imgUrl" wx:for-index="idx" wx:key="ik">
+              <image mode='widthFix' id="photo" src="{{imgUrl}}" class="preview_img"></image>
+            </block>
+            <block wx:if="{{imgUrls.length < 9}}">
+              <image bindtap="pickImg" class="add_img_btn" src="/images/add_image.png"></image>
+            </block> -->
+            <!-- <view class="textarea_box" style='width:100%'>
+                <textarea placeholder="说点什么..." name="content" bindblur="setContent" />
+            </view> -->
+            <textarea class='textarea_box1' name="content" bindblur="setContent" placeholder="说点什么..." auto-height/>
+            <view class="image_content">
+              <view class='image' wx:for="{{localImgPaths}}" wx:key="ik">
+                <image class="moment_img" src="{{item}}"></image>
+              </view>
+              <view class='image' style='display:{{localImgPaths.length < 9?"block":"none"}}'>
+                <image bindtap="pickImg" class="moment_img" src='/images/add_image.png'></image>
+              </view>
+            </view>
+            <button class='publish_btn' bindtap="saveArticle" type='primary'>发布</button>
+          </block>
+          <block wx:else>
+            <text class="start_txt"></text>
+            <image bindtap="pickImg" class="add_img_btn" src="/images/add_image.png"></image>
+            <text class="add_txt">添加图片</text>
+          </block>
+    	</view>
+    </view>
+</view>
