@@ -57,6 +57,14 @@
   width:300rpx;
 }
 
+.enter-button{
+  background-color: white;
+  color: #d4237a;
+  border: 1px solid #d4237a;
+  width: 80%;
+  margin-top: 60rpx;
+}
+
 
 .image{
  width:31%;

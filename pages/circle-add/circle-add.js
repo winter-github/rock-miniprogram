@@ -75,6 +75,36 @@ Page({
     });
   },
 
+  prevImg: function (e) {
+    var uri = e.target.dataset.uri;
+    wx.previewImage({
+      urls: [uri] // 需要预览的图片http链接列表
+    });
+  },
+
+  removeImg:function(e) {
+    var that = this;
+    wx.showModal({
+      title: '提示',
+      content: '确认要移除此照片吗？',
+      success: function (res) {
+        if (res.confirm) {
+          console.log("that.data.imgUrls="+that.data.imgUrls);
+          console.log("that.data.localImgPaths=" + that.data.localImgPaths);
+          var idx = e.target.dataset.idx;
+          var tempImgUrls = that.data.imgUrls;
+          var tempLocalImgPaths = that.data.localImgPaths;
+          tempImgUrls.splice(idx, 1);
+          tempLocalImgPaths.splice(idx, 1);
+          that.setData({
+            imgUrls: tempImgUrls,
+            localImgPaths: tempLocalImgPaths
+          });
+        }
+      }
+    });
+  },
+
   setContent:function(e){
     console.log(e.detail.value);
     this.setData({
@@ -91,6 +121,9 @@ Page({
   },
 
   saveArticleInner:function(){
+    wx.showLoading({
+      title: '发布中',
+    });
     var that = this;
     var content = that.data.content ? that.data.content:'';
     wx.request({
@@ -104,8 +137,11 @@ Page({
       success: res => {
         console.log("article/save.do res=" + res.data);
         that.setData({
+          imgUrls: [],
+          localImgPaths: [],
           'hasImg': false
         });
+        wx.hideLoading();
         wx.switchTab({
           url: '../circle/circle'
         })

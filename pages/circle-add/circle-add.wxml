@@ -14,14 +14,15 @@
             </view> -->
             <textarea class='textarea_box1' name="content" bindblur="setContent" placeholder="说点什么..." auto-height/>
             <view class="image_content">
-              <view class='image' wx:for="{{localImgPaths}}" wx:key="ik">
-                <image class="moment_img" src="{{item}}"></image>
+              <view class='image' wx:for="{{localImgPaths}}" wx:for-index="idx" wx:key="ik">
+                <image class="moment_img" src="{{item}}" data-uri='{{item}}' data-idx='{{idx}}' bindtap='prevImg' bindlongpress="removeImg"></image>
               </view>
               <view class='image' style='display:{{localImgPaths.length < 9?"block":"none"}}'>
                 <image bindtap="pickImg" class="moment_img" src='/images/add_image.png'></image>
               </view>
             </view>
-            <button class='publish_btn' bindtap="saveArticle" type='primary'>发布</button>
+            <button class="enter-button" bindtap="saveArticle" > 发布 
+  </button>
           </block>
           <block wx:else>
             <text class="start_txt"></text>

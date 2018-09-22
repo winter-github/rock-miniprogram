@@ -1,9 +1,10 @@
 //获取应用实例
 const app = getApp();
-var noRefreshFlag = false;
+var articleListLock = false;
 
 Page({
   data: {
+    loginUserId: null,
     articleList:[],
     pageNum: 1,
     totalPage: 0,
@@ -11,7 +12,8 @@ Page({
     showDialog: false,
     defaultCommentContent: '写下您的评论',
     clickedIdx: -1,
-    clickedCidx: -1
+    clickedCidx: -1,
+    noRefreshFlag :false
   },
 
   /**
@@ -19,7 +21,7 @@ Page({
    */
   onLoad: function () {
     var that = this;
-
+    
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
@@ -32,14 +34,17 @@ Page({
   },
 
   onShow: function () {
-    if(!noRefreshFlag){
+    console.log("onShow noRefreshFlag==" + this.data.noRefreshFlag);
+    if (!this.data.noRefreshFlag){
       this.articleList(1);
       var top = this.data.scrollTop;
       this.setData({
         scrollTop: top == 0 ? 1 : 0
       });
     }
-    noRefreshFlag = false;
+    this.setData({
+      noRefreshFlag: false
+    });
   },
 
   /**
@@ -89,6 +94,10 @@ Page({
 
   articleList: function (pageNum){
     console.log("articleList pageNum===" + pageNum + ", userId=" + app.globalData.userInfo.id);
+    if (articleListLock){
+      return;
+    }
+    articleListLock = true;
 
     var that = this;
     if (!app.globalData.userInfo.id){
@@ -99,6 +108,7 @@ Page({
     }
     
     that.setData({
+      loginUserId: app.globalData.userInfo.id,
       pageNum: pageNum
     });
     
@@ -119,6 +129,40 @@ Page({
           articleList: records,
           totalPage: res.data.totalPage
         });
+      },
+      complete: res=>{
+        articleListLock = false;
+      }
+    });
+  },
+
+  delArticle: function(e){
+    var that = this;
+    
+    wx.showModal({
+      title: '提示',
+      content: '确认删除你的图文吗？',
+      success: function (res) {
+        if (res.confirm) {
+          var idx = e.target.dataset.idx;
+          var articleId = e.target.dataset.articleId;
+          var articleList = that.data.articleList;
+          articleList.splice(idx, 1);
+
+          that.setData({
+            articleList: articleList
+          });
+          
+          wx.request({
+            url: app.globalData.server_url + "/rock-lanmao/article/delete.do?articleId=" + articleId,
+            method: 'GET',
+            success: res => {
+              console.log("article/delete.do res=" + res.data.status);
+            }
+          });
+        } else if (res.cancel) {
+          console.log('取消删除图文');
+        }
       }
     });
   },
@@ -132,16 +176,19 @@ Page({
     for (var i = 0; i < pictures.length; i++){
       urls.push(pictures[i].path);
     }
-    console.log("urls=" + urls);
     wx.previewImage({
-      //current: uri, // 当前显示图片的http链接
+      current: uri, // 当前显示图片的http链接
       urls: urls // 需要预览的图片http链接列表
     });
-    noRefreshFlag = true;
+    this.setData({
+      noRefreshFlag: true
+    })
   },
 
   setNoRefresh:function(){
-    noRefreshFlag = true;
+    this.setData({
+      noRefreshFlag: true
+    })
   },
 
   agree:function(e){
@@ -281,11 +328,11 @@ Page({
       comments = new Array();
     }
     var newComment = { 
-      user: 
-      { 
+      user: { 
         id: app.globalData.userInfo.id,
         headImgUrl: app.globalData.userInfo.headImgUrl, 
-        nickName: app.globalData.userInfo.nickName}, 
+        nickName: app.globalData.userInfo.nickName
+      }, 
       content: content,
       targetComment: targetComment
     };

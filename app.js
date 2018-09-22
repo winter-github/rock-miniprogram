@@ -122,7 +122,7 @@ App({
   },
 
   globalData: {
-    server_url:'https://ceshi.liuwatuan.com',
+    server_url:'https://www.rockyueyang.com',
     cuId: 1,
     homeName:'懒猫咖啡',
     homeLat: 29.357347,

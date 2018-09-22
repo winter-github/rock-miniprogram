@@ -47,6 +47,9 @@ Page({
     },
 
     buyGift:function(e){
+      wx.showLoading({
+        title: '加载中',
+      });
       var that = this;
       console.log("dataset==" + e.currentTarget.dataset);
       var goodsId = e.currentTarget.dataset.goodsId;
@@ -67,6 +70,7 @@ Page({
         },
         success: res => {
           console.log("order/addOrder.do res.data.orderId=" + res.data.orderId);
+          wx.hideLoading();
           that.pay(res.data.orderId);
         }
       });
@@ -94,13 +98,21 @@ Page({
                 showCancel: false,
                 success: function (res) {
                   if (res.confirm) {
-                    console.log('用户点击确定')
+                    var pages = getCurrentPages();
+                    var prevPage = pages[pages.length - 2];
+                    prevPage.setData({
+                      noRefreshFlag: false
+                    });
+
+                    wx.switchTab({
+                      url: '../circle/circle'
+                    })
                   }
                 }
-              })
-            },
-            'fail': function (res) {
-            }
+              });
+             },
+             'fail': function (res) {
+             }
           });
         }
       });
