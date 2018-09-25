@@ -8,7 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    coverImg: null
+    coverImg: null,
+    coverTitle: null
   },
 
   /**
@@ -16,16 +17,19 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    console.log("app.globalData.homeCoverImg=" + app.globalData.homeCoverImg);
-    if (app.globalData.homeCoverImg == null) {
+    console.log("app.globalData.homeCoverImg=" + app.globalData.homeCoverImg + ", app.globalData.homeCoverTitle=" + app.globalData.homeCoverTitle);
+    if (app.globalData.homeCoverImg == null 
+          || app.globalData.homeCoverTitle == null) {
       app.getControlUnitReadyCallback = res => {
         that.setData({
-          coverImg: res.coverImg
+          coverImg: app.globalData.homeCoverImg,
+          coverTitle: app.globalData.homeCoverTitle
         });
       }
     }else{
       that.setData({
-        coverImg: app.globalData.homeCoverImg
+        coverImg: app.globalData.homeCoverImg,
+        coverTitle: app.globalData.homeCoverTitle
       });
     }
   },

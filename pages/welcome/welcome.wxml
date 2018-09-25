@@ -4,6 +4,6 @@
 </view>
 
 <view class="enter-container">
-  <button class="enter-button" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo"> 你回家了，我在等你呢 
+  <button class="enter-button" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo"> {{coverTitle}} 
   </button>
 </view>

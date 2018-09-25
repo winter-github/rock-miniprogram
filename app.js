@@ -7,7 +7,7 @@ App({
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
 
-    // 获取控制单元
+    // 获取控制单元信息
     that.getControlUnit();
 
     // 登录
@@ -23,12 +23,21 @@ App({
         id: that.globalData.cuId
       },
       success: res => {
-        console.log("system/getControlUnitById.do res===" + res.data.controlUnit);
+        console.log("system/getControlUnitById.do res===" + JSON.stringify(res.data.controlUnit));
+        that.buildHomeSettings(res.data.controlUnit);
+
         if (that.getControlUnitReadyCallback) {
           console.log("app call app.getControlUnitReadyCallback");
-          that.getControlUnitReadyCallback(res.data.controlUnit);
+          that.getControlUnitReadyCallback();
         }
-        that.buildHomeSettings(res.data.controlUnit);
+        if (that.getControlUnitReadyCallback1){
+          console.log("app call app.getControlUnitReadyCallback1");
+          that.getControlUnitReadyCallback1();
+        }
+        if (that.getControlUnitReadyCallback2){
+          console.log("app call app.getControlUnitReadyCallback2");
+          that.getControlUnitReadyCallback2();
+        }
       }
     })
   },
@@ -39,8 +48,10 @@ App({
     that.globalData.homeLat = controlUnit.lat;
     that.globalData.homeLng = controlUnit.lng;
     that.globalData.homeCoverImg = controlUnit.coverImg;
+    that.globalData.homeCoverTitle = controlUnit.coverTitle;
+    that.globalData.homeGiftBanner = controlUnit.giftBanner;
     that.globalData.enableCheckDistance = controlUnit.enableCheckDistance==1;
-    console.log(JSON.stringify(that.globalData));
+    that.globalData.homeStatus = controlUnit.status;
   },
 
   login: function(){
@@ -128,7 +139,10 @@ App({
     homeLat: 29.357347,
     homeLng: 113.133537,
     homeCoverImg: null,
+    homeCoverTitle: null,
+    homeGiftBanner: null,
     enableCheckDistance:false,
+    homeStatus:null,
     userInfo: {}
   }
 })

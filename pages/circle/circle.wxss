@@ -1,7 +1,3 @@
-.alignleft { 
-  float: left; 
-} 
-
 .info_main_box{
     border:1rpx solid rgb(206,206,206);
     border-radius: 10rpx;
@@ -35,7 +31,7 @@
 }
 
 .info_footer_box{
-    border-top: 1rpx solid rgb(206,206,206);
+    /*border-top: 1rpx solid rgb(206,206,206);*/
     display: flex;
     padding:10rpx 0;
 }
@@ -187,7 +183,7 @@
 }
 
 .photo_comment_box{
-	border-top: 1rpx solid rgb(206,206,206);
+	/*border-top: 1rpx solid rgb(206,206,206);*/
 	overflow: hidden;
 	padding: 20rpx 0 20rpx 0;
 }

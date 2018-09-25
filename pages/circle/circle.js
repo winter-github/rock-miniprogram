@@ -4,6 +4,7 @@ var articleListLock = false;
 
 Page({
   data: {
+    homeStatus: null,
     loginUserId: null,
     articleList:[],
     pageNum: 1,
@@ -13,7 +14,8 @@ Page({
     defaultCommentContent: '写下您的评论',
     clickedIdx: -1,
     clickedCidx: -1,
-    noRefreshFlag :false
+    noRefreshFlag :false,
+    watchUserId:null
   },
 
   /**
@@ -28,7 +30,20 @@ Page({
           scrollHeight: res.windowHeight
         });
       }
-    });  
+    });
+
+    console.log("app.globalData.homeStatus=" + app.globalData.homeStatus);
+    if (app.globalData.homeStatus == null) {
+      app.getControlUnitReadyCallback2 = res => {
+        that.setData({
+          homeStatus: app.globalData.homeStatus
+        });
+      }
+    } else {
+      that.setData({
+        homeStatus: app.globalData.homeStatus
+      });
+    }  
 
     //that.articleList(1);
   },
@@ -37,10 +52,7 @@ Page({
     console.log("onShow noRefreshFlag==" + this.data.noRefreshFlag);
     if (!this.data.noRefreshFlag){
       this.articleList(1);
-      var top = this.data.scrollTop;
-      this.setData({
-        scrollTop: top == 0 ? 1 : 0
-      });
+      this.initScrollTop();
     }
     this.setData({
       noRefreshFlag: false
@@ -70,6 +82,13 @@ Page({
   },
 
   /////////////以下自定义函数////////////
+  initScrollTop:function(){
+    var top = this.data.scrollTop;
+    this.setData({
+      scrollTop: top == 0 ? 1 : 0
+    });
+  },
+
   scrollToupper:function(){
     wx.startPullDownRefresh();
   },
@@ -116,6 +135,7 @@ Page({
       url: app.globalData.server_url + "/rock-lanmao/article/list.do",
       data: {
         'userId': app.globalData.userInfo.id,
+        'watchUserId': that.data.watchUserId,
         'pageNum': pageNum
       },
       success: res => {
@@ -123,12 +143,12 @@ Page({
         var records = res.data.records;
         if (pageNum > 1){
           records = that.data.articleList.concat(records);
-          wx.hideLoading();
         }
         that.setData({
           articleList: records,
           totalPage: res.data.totalPage
         });
+        wx.hideLoading();
       },
       complete: res=>{
         articleListLock = false;
@@ -136,12 +156,50 @@ Page({
     });
   },
 
+  watchSomeone:function(e){
+    var that = this;
+
+    wx.showModal({
+      title: '提示',
+      content: '你只想看ta的照片吗？',
+      success: function (res) {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '加载中',
+          });
+
+          var idx = e.target.dataset.idx;
+          var watchUserId = e.target.dataset.userId;
+          that.setData({
+            watchUserId: watchUserId
+          });
+          that.articleList(1);
+          that.initScrollTop();
+        } else if (res.cancel) {
+          console.log('取消watch');
+        }
+      }
+    });
+  },
+
+  cancelWatch:function(){
+    wx.showLoading({
+      title: '加载中',
+    });
+
+    this.setData({
+      watchUserId: null
+    });
+    this.articleList(1);
+    this.initScrollTop();
+  },
+
   delArticle: function(e){
     var that = this;
     
     wx.showModal({
       title: '提示',
-      content: '确认删除你的图文吗？',
+      content: '确认删除你的照片吗？',
       success: function (res) {
         if (res.confirm) {
           var idx = e.target.dataset.idx;
@@ -161,7 +219,7 @@ Page({
             }
           });
         } else if (res.cancel) {
-          console.log('取消删除图文');
+          console.log('取消删除照片');
         }
       }
     });

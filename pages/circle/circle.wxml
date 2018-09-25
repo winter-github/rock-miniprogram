@@ -8,6 +8,7 @@
               </navigator>
               <text class='author_name'>{{item.user.nickName}}</text>
               <image wx:if='{{item.user.id == loginUserId}}' class='author_del_btn' src="/images/icon_del0.png" data-idx='{{idx}}' data-article-id='{{item.id}}' bindtap="delArticle"></image>
+              <image wx:else class='author_del_btn' src="{{watchUserId == null?'/images/icon_eye0.png':'/images/icon_eye1.png'}}" data-idx='{{idx}}' data-user-id='{{item.user.id}}' bindtap="{{watchUserId == null?'watchSomeone':'cancelWatch'}}"></image>
           </view>
       </view>
       <!-- <image mode='aspectFill' src="{{item.pictures[0].path}}" data-uri="{{item.pictures[0].path}}" bindtap='prevImg'></image> -->
@@ -23,9 +24,9 @@
       <view class="info_desc_box">
           <view class="info_footer_box">
               <view class="count_box">
-                  <navigator url="/pages/gift-list/gift-list?articleId={{item.id}}&receiveUserId={{item.user.id}}" open-type ="navigate" hover-class="none">
+                  <navigator wx:if="{{homeStatus == 'ON_LINE'}}" url="/pages/gift-list/gift-list?articleId={{item.id}}&receiveUserId={{item.user.id}}" open-type ="navigate" hover-class="none">
                     <view class="count_info_content" bindtap="setNoRefresh">
-                        <image src="/images/icon_coffee0.png" data-idx='{{idx}}' data-article-id='{{item.id}}'></image>
+                        <image src="/images/icon_gift0.png" data-idx='{{idx}}' data-article-id='{{item.id}}'></image>
                         <text>{{item.giftCount}}</text>
                     </view>
                   </navigator>

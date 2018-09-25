@@ -3,7 +3,7 @@ const app = getApp();
 
 Page({
     data: {
-        banner : '/images/c1.png',
+        banner : null,
         goodsList: [],
         pageNum: 1,
         totalPage: 0,
@@ -17,13 +17,27 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+      var that = this;
+      console.log("app.globalData.homeGiftBanner=" + app.globalData.homeGiftBanner);
+      if (app.globalData.homeGiftBanner == null) {
+        app.getControlUnitReadyCallback1 = res => {
+          that.setData({
+            banner: app.globalData.homeGiftBanner
+          });
+        }
+      } else {
+        that.setData({
+          banner: app.globalData.homeGiftBanner
+        });
+      }
+
       console.log("load options.articleId=" + options.articleId + ", options.receiveUserId=" + options.receiveUserId);
-      this.setData({
+      that.setData({
         articleId: options.articleId,
         receiveUserId: options.receiveUserId
       });
 
-      this.goodsList();
+      that.goodsList();
     },
 
     goodsList: function () {
